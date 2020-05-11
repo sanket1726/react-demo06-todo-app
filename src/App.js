@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useReducer } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, ModalFooter } from "reactstrap";
+import "./App.css";
+import { TodoContext } from "./context/TodoContext";
+import TodoReducer from "./context/reducer";
+import TodoForm from "./components/TodoForm";
+import Todos from "./components/Todos";
+import MyPic from "./32248.jpg";
 
-function App() {
+const App = () => {
+  const [todos, dispatch] = useReducer(TodoReducer, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoContext.Provider
+      value={{
+        todos,
+        dispatch,
+      }}
+    >
+      <Container fluid>
+        <img className="picture" src={MyPic} alt="smiling" />
+        <hr className="my-line" />
+        <h1> ToDo App with Context API </h1> <TodoForm />
+        <Todos />
+      </Container>{" "}
+    </TodoContext.Provider>
   );
-}
+};
 
 export default App;
